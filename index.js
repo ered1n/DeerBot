@@ -37,7 +37,7 @@ const {prefix, token} = require('./config.json');
 const client = new Discord.Client();
 client.commands = new Discord.Collection();
 
-//  Load command files
+//  Load command files 
 const commandFiles = fs.readdirSync('./commands').filter(file => file.endsWith('.js'));
 
 for (const file of commandFiles) {
