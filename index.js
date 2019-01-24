@@ -1,15 +1,15 @@
 /**
  * DeerBot is a Discord bot made by Eredin#2903 & Angelo#1337
  *
- *                   /|       |\
- *                `__\\       //__'
- *                    ||      ||
- *                  \__`\     |'__/
- *                    `_\\   //_'
- *                    _.,:---;,._
- *                    \_:     :_/
- *                      |@. .@|
- *                      |     |
+ *                  /|       |\
+ *               `__\\       //__'
+ *                   ||      ||
+ *                 \__`\     |'__/
+ *                   `_\\   //_'
+ *                   _.,:---;,._
+ *                   \_:     :_/
+ *                     |@. .@|
+ *                     |     |
  *                     ,\.-./ \
  *                     ;;`-'   `---__________-----.-.
  *                     ;;;                         \_\
@@ -55,6 +55,7 @@ client.once('ready', () => {
 //  Listen to messages sent from client
 client.on('message', message => {
 
+    //  Calls emojiReact function
     utils.emojiReact(client, message);
 
     //  Return if message doesn't start with prefix or author is bot
@@ -62,11 +63,17 @@ client.on('message', message => {
 
     //  Get command and arguments
     const args = message.content.slice(prefix.length).split(/ +/);
-	const command = args.shift().toLowerCase()
+    const commandName = args.shift().toLowerCase();
+    
+    //  Return if command doesn't exist
+    if (!client.commands.has(commandName)) return;
+    
+    //  Gets command
+    const command = client.commands.get(commandName);
 
     //  Execute command
 	try {
-        client.commands.get(command).execute(client, message, args);
+        command.execute(client, message, args);
     } catch (error) {
         console.error(error);
         message.reply('There was an error trying to execute that command!');
