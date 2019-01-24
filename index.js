@@ -32,18 +32,22 @@
 //  Imports
 const fs = require('fs');
 const Discord = require('discord.js');
-const {prefix, token} = require('./config.json');
+const {prefix, token, giphyToken} = require('./config.json');
 const utils = require('./utils/utils.js');
 
 const client = new Discord.Client();
 client.commands = new Discord.Collection();
+client.giphy = require('giphy-api')(giphyToken);
 
 //  Load command files
-const commandFiles = fs.readdirSync('./commands').filter(file => file.endsWith('.js'));
+const commandDirectories = utils.getDirectories('./commands');
+for (let dir in commandDirectories) {
+    const commandFiles = fs.readdirSync(`./commands/${commandDirectories[dir]}`).filter(file => file.endsWith('.js'));
 
-for (const file of commandFiles) {
-	const command = require(`./commands/${file}`);
-	client.commands.set(command.name, command);
+    for (let file of commandFiles) {
+        const command = require(`./commands/${commandDirectories[dir]}/${file}`);
+        client.commands.set(command.name, command);
+    }
 }
 
 //  Runs on bot startup

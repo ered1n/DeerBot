@@ -1,9 +1,17 @@
 /**
  * Util functions
  */
+ 
+const fs = require('fs');
 
 module.exports = {
-    emojiReact: function(client, message) {
+    getDirectories: function(path) {
+        return fs.readdirSync(path).filter(function (file) {
+            return fs.statSync(path + '/' + file).isDirectory();
+        });
+    },
+    
+    emojiReact: async function(client, message) {
         // List of emoji keywords with their values
         const emojiList = {
             'deer': '🦌',
@@ -18,7 +26,17 @@ module.exports = {
         
         //  Loops through emojiList and reacts with emoji
         for (let emoji in emojiList) {
-            if (message.content.toLowerCase().includes(emoji)) message.react(emojiList[emoji]);
+            if (message.content.toLowerCase().includes(emoji)) await message.react(emojiList[emoji]).catch(error => {
+                return;
+            });
         }
+    },
+    
+    randomGif: function(client, gifQuery) {
+        return client.giphy.random(gifQuery).then((res) => {
+            return res.data.images.original.url;
+        }).catch((err) => {
+            return false;
+        });
     },
  };
