@@ -1,6 +1,6 @@
-/*
-	Basic commands
-*/
+/**
+ * Basic commands
+ */
 
 module.exports = {
 

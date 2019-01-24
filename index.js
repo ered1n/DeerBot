@@ -1,43 +1,44 @@
-/*
-    DeerBot is a Discord bot made by Eredin#2903 & Angelo#1337
-
-                     /|       |\
-                  `__\\       //__'
-                     ||      ||
-                   \__`\     |'__/
-                     `_\\   //_'
-                     _.,:---;,._
-                     \_:     :_/
-                       |@. .@|
-                       |     |
-                       ,\.-./ \
-                       ;;`-'   `---__________-----.-.
-                       ;;;                         \_\
-                       ';;;                         |
-                        ;    |                      ;
-                         \   \     \        |      /
-                          \_, \    /        \     |\
-                            |';|  |,,,,,,,,/ \    \ \_
-                            |  |  |           \   /   |
-                            \  \  |           |  / \  |
-                             | || |           | |   | |
-                             | || |           | |   | |
-                             | || |           | |   | |
-                             |_||_|           |_|   |_|
-                            /_//_/           /_/   /_/
-
-    If you are reading this, please stop yoinking our code.
-*/
+/**
+ * DeerBot is a Discord bot made by Eredin#2903 & Angelo#1337
+ *
+ *                   /|       |\
+ *                `__\\       //__'
+ *                    ||      ||
+ *                  \__`\     |'__/
+ *                    `_\\   //_'
+ *                    _.,:---;,._
+ *                    \_:     :_/
+ *                      |@. .@|
+ *                      |     |
+ *                     ,\.-./ \
+ *                     ;;`-'   `---__________-----.-.
+ *                     ;;;                         \_\
+ *                     ';;;                         |
+ *                      ;    |                      ;
+ *                        \   \     \        |      /
+ *                        \_, \    /        \     |\
+ *                          |';|  |,,,,,,,,/ \    \ \_
+ *                           |  |  |           \   /   |
+ *                           \  \  |           |  / \  |
+ *                            | || |           | |   | |
+ *                            | || |           | |   | |
+ *                            | || |           | |   | |
+ *                            |_||_|           |_|   |_|
+ *                           /_//_/           /_/   /_/
+ *
+ *   If you are reading this, please stop yoinking our code.
+ */
 
 //  Imports
 const fs = require('fs');
 const Discord = require('discord.js');
 const {prefix, token} = require('./config.json');
+const utils = require('./utils/utils.js');
 
 const client = new Discord.Client();
 client.commands = new Discord.Collection();
 
-//  Load command files 
+//  Load command files
 const commandFiles = fs.readdirSync('./commands').filter(file => file.endsWith('.js'));
 
 for (const file of commandFiles) {
@@ -54,15 +55,7 @@ client.once('ready', () => {
 //  Listen to messages sent from client
 client.on('message', message => {
 
-    //  Reacts with emoji if message contains a certain word
-    if (message.content.toLowerCase().includes("deer")) { message.react('🦌'); }  
-    if (message.content.toLowerCase().includes("cat")) { message.react('🐱'); }
-    if (message.content.toLowerCase().includes("dog")) { message.react('🐶'); }
-    if (message.content.toLowerCase().includes("snek")) { message.react('🐍'); }
-    if (message.content.toLowerCase().includes("duck")) { message.react('🦆'); }
-    if (message.content.toLowerCase().includes("bear")) { message.react('🐻'); }
-    //if (message.content.toLowerCase().includes("nigger")) { message.react('HYPERBRUH'); }
-    //if (message.content.toLowerCase().includes("gnome")) { message.react('GNOMED'); }
+    utils.emojiReact(client, message);
 
     //  Return if message doesn't start with prefix or author is bot
     if (!message.content.startsWith(prefix) || message.author.bot) return;
