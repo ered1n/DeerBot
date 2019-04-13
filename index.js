@@ -34,6 +34,7 @@ const fs = require('fs');
 const Discord = require('discord.js');
 const {prefix, token, giphyToken} = require('./config.json');
 const utils = require('./utils/utils.js');
+const database = require('./utils/db.js');
 
 const client = new Discord.Client();
 client.commands = new Discord.Collection();
@@ -61,6 +62,9 @@ client.on('message', message => {
 
     //  Calls emojiReact function
     utils.emojiReact(client, message);
+
+    //  Calls database functions
+    database.addServer(message);
 
     //  Return if message doesn't start with prefix or author is bot
     if (!message.content.startsWith(prefix) || message.author.bot) return;

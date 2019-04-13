@@ -1,5 +1,7 @@
 {
 	"prefix": "",
 	"token": "",
-	"giphyToken": ""
+	"giphyToken": "",
+	"databaseUrl": "",
+	"databaseName": ""
 }
