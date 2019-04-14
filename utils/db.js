@@ -28,10 +28,10 @@ function mongoExists(collection, query) {
 }
 
 //  Adds a server to the database
-async function addServer(message) {
+function addServer(message) {
     const query = {server_id: message.guild.id}
-    await console.log(mongoExists("Server", query));
-    mongoInsert("Server", query);
+    console.log(mongoExists("Server", query));
+    //mongoInsert("Server", query);
 }
 
 //  Adds a user to the database
